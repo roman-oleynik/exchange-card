@@ -14,4 +14,4 @@ You will also see any lint errors in the console.
 
 For launching database on json-server type this:
 
-json-server -p 4000 currencies.json
+### `json-server -p 4000 currencies.json`
