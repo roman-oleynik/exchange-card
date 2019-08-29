@@ -4,10 +4,11 @@ import {ProcessInputValueActionObject} from '../../types/types';
 let initialState: InputValue = 0;
 function inputValueReducer(state=initialState, action: ProcessInputValueActionObject): InputValue {  // any\
     if (action.type === PROCESS_INPUT_VALUE) {
+        const currenciesData = action.currenciesData["USD-BYN"];
         if (action.mode === USD_BYN) {
-            return (action.data as number)*2.045;
+            return (action.data as number) * currenciesData;
         } else if (action.mode === BYN_USD) {
-            return (action.data as number)*1/2.045;
+            return (action.data as number) * 1 / currenciesData;
         }
         return action.data;
     }

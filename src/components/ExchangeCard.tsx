@@ -3,14 +3,15 @@ import {connect} from 'react-redux';
 
 import './ExchangeCard.css';
 
-import {AppState, InputValue} from '../types/types';
-import {ACT_SWITCH_EXCHANGE_MODE, ACT_PROCESS_INPUT_VALUE, ACT_CLEAR_INPUT_VALUE} from '../redux/actions/actions';
+import {AppState, InputValue, CurrenciesData} from '../types/types';
+import {ACT_SWITCH_EXCHANGE_MODE, ACT_PROCESS_INPUT_VALUE, ACT_CURRENCIES_DATA_LOADED} from '../redux/actions/actions';
 
 import axios from 'axios';
 
 import {USD_BYN, BYN_USD} from '../types/types'; 
 
 interface IProps {
+    currenciesData: CurrenciesData,
     exchangeMode: typeof USD_BYN | typeof BYN_USD,
     outputValue: InputValue,
     dispatch: any
@@ -18,12 +19,13 @@ interface IProps {
 
 class ExchangeCard extends React.Component<IProps> {
     componentWillMount = () => {
-        axios.get('http://www.nbrb.by/API/ExRates/Rates?Periodicity=0', {
+        axios.get('http://localhost:4000/data', {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             }
-            }).then(function (response) {
-                console.log(response);
+            }).then((response) => {
+                this.props.dispatch(ACT_CURRENCIES_DATA_LOADED(response.data));
+                console.log(this.props.currenciesData)
             })
     
     }
@@ -34,16 +36,16 @@ class ExchangeCard extends React.Component<IProps> {
         value = this.inputValue;
     };
     switchExchangeMode = () => {
-        this.props.dispatch(ACT_PROCESS_INPUT_VALUE(0, this.props.exchangeMode));
+        this.props.dispatch(ACT_PROCESS_INPUT_VALUE(0, this.props.exchangeMode, this.props.currenciesData));
         this.props.dispatch(ACT_SWITCH_EXCHANGE_MODE(this.props.exchangeMode));
         this.clearInputValue();
     };
     processInputValue = (EO: any) => {  
         this.inputValue = EO.target.value;        
-        this.props.dispatch(ACT_PROCESS_INPUT_VALUE(EO.target.value, this.props.exchangeMode));
+        this.props.dispatch(ACT_PROCESS_INPUT_VALUE(EO.target.value, this.props.exchangeMode, this.props.currenciesData));
     };
     render() {
-        return <section className="Exchange-Card-Container">
+        return this.props.currenciesData ? <section className="Exchange-Card-Container">
             <h1 className="Exchange-Card-Container__Title">USD-BYN Converter</h1>
             <div className="Exchange-Card-Container-Content">
                 <div className="Exchange-Card-Container-Content__Fields">
@@ -61,12 +63,13 @@ class ExchangeCard extends React.Component<IProps> {
                 <input type="button" value="Swap" onClick={this.switchExchangeMode} />
             </div>
             
-        </section>
+        </section> : <div>Loading...</div>
     }
 }
 
 let mapStateToProps = (state: AppState) => {
     return {
+        currenciesData: state.currenciesData,
         exchangeMode: state.exchangeMode,
         outputValue: state.inputValue
     }
