@@ -6,9 +6,9 @@ function inputValueReducer(state=initialState, action: ProcessInputValueActionOb
     if (action.type === PROCESS_INPUT_VALUE) {
         const currenciesData = action.currenciesData["USD-BYN"];
         if (action.mode === USD_BYN) {
-            return (action.data as number) * currenciesData;
+            return ((action.data as number) * currenciesData).toFixed(2);
         } else if (action.mode === BYN_USD) {
-            return (action.data as number) * 1 / currenciesData;
+            return ((action.data as number) * 1 / currenciesData).toFixed(2);
         }
         return action.data;
     }
