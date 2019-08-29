@@ -51,12 +51,12 @@ class ExchangeCard extends React.Component<IProps> {
                 <div className="Exchange-Card-Container-Content__Fields">
                     <div className="Input-Field">
                         <input type="number" ref="value" value={this.inputValue} onChange={this.processInputValue}/>
-                        <span>{this.props.exchangeMode === USD_BYN ? "USD": "BYN"}</span>
+                        <span className="Input-Field__Currency-Title">{this.props.exchangeMode === USD_BYN ? " USD": " BYN"}</span>
                     </div>
 
                     <div className="Output-Field">
                         <span>{this.props.outputValue}</span>
-                        <span>{this.props.exchangeMode === USD_BYN ? "BYN": "USD"}</span>
+                        <span className="Output-Field__Currency-Title">{this.props.exchangeMode === USD_BYN ? " BYN": " USD"}</span>
                     </div>
                 </div>
                 

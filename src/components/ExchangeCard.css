@@ -1,1 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Gayathri&display=swap');
+
+* { font-family: 'Gayathri', sans-serif; }
+
+#root {display: flex; justify-content: center; align-items: center; height: 100vh; width: 100%;}
+
+.Exchange-Card-Container__Title {margin: 0;}
 .Exchange-Card-Container-Content { display: flex; align-items: center; }
+.Input-Field {height: 26px; margin: 5px;}
+.Output-Field {height: 26px; margin: 5px;}
