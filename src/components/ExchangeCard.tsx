@@ -18,7 +18,7 @@ interface IProps {
 }
 
 class ExchangeCard extends React.Component<IProps> {
-    componentWillMount = () => {
+    public componentWillMount = () => {
         axios.get('http://localhost:4000/data', {
             headers: {
                 'Access-Control-Allow-Origin': '*'
@@ -30,21 +30,21 @@ class ExchangeCard extends React.Component<IProps> {
     
     }
     private inputValue: InputValue = "";
-    clearInputValue = () => {
+    public clearInputValue = () => {
         this.inputValue = "";
         let {value}: any = this.refs;
         value = this.inputValue;
     };
-    switchExchangeMode = () => {
+    public switchExchangeMode = () => {
         this.props.dispatch(ACT_PROCESS_INPUT_VALUE(0, this.props.exchangeMode, this.props.currenciesData));
         this.props.dispatch(ACT_SWITCH_EXCHANGE_MODE(this.props.exchangeMode));
         this.clearInputValue();
     };
-    processInputValue = (EO: any) => {  
+    public processInputValue = (EO: any) => {  
         this.inputValue = EO.target.value;        
         this.props.dispatch(ACT_PROCESS_INPUT_VALUE(EO.target.value, this.props.exchangeMode, this.props.currenciesData));
     };
-    render() {
+    public render() {
         return this.props.currenciesData ? <section className="Exchange-Card-Container">
             <h1 className="Exchange-Card-Container__Title">USD-BYN Converter</h1>
             <div className="Exchange-Card-Container-Content">
