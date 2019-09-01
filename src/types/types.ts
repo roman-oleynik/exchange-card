@@ -12,7 +12,7 @@ export type InputValue = number | string;
 export type CurrenciesExchangeMode = typeof USD_BYN | typeof BYN_USD;
 
 
-export type CurrenciesData = {"USD-BYN": number };
+export type CurrenciesData = number;
 
 export interface SwitchExchangeModeActionObject {
     type: typeof SWITCH_EXCHANGE_MODE,

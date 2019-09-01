@@ -19,20 +19,18 @@ interface IProps {
 
 class ExchangeCard extends React.Component<IProps> {
     public componentWillMount = () => {
-        axios.get('http://localhost:4000/data', {
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            }
-            }).then((response) => {
-                this.props.dispatch(ACT_CURRENCIES_DATA_LOADED(response.data));
-                console.log(this.props.currenciesData)
+        axios.get('http://www.nbrb.by/API/ExRates/Rates?Periodicity=0')
+            .then((response) => {
+                const USDValue = response.data.find((el:any) => el.Cur_Abbreviation === "USD").Cur_OfficialRate
+                this.props.dispatch(ACT_CURRENCIES_DATA_LOADED(USDValue));
             })
+            .catch(err => console.log(err))
     
     }
     private inputValue: InputValue = "";
     public clearInputValue = () => {
         this.inputValue = "";
-        let {value}: any = this.refs;
+        let value: any = this.refs.value;
         value = this.inputValue;
     };
     public switchExchangeMode = () => {
